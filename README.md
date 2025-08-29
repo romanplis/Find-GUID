@@ -20,5 +20,11 @@ Paste your text, click **"Find GUID"**, and copy results with one click.
 
 ---
 
+## 🌐 Live Demo
+👉 [Try it here](https://romanplis.github.io/Find-GUID/Find%20GUID.html)
+
+---
+
 ## 📜 License
 This project is open source and available under the [MIT License](LICENSE).
+
