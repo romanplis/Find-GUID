@@ -47,31 +47,39 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     #copyMessage {
-      margin-top: 10px;
+      margin-top: 9px;
       color: green;
       font-size: 14px;
       display: none;
     }
-    label[for="inputText"] {
-      font-size: 14px;   /* увеличим */
-      font-weight: 100;  /* сделаем чуть жирнее */
-      margin: 20px;
-    }
-    label[for="outputText"] {
-      font-size: 14px;   /* увеличим */
-      font-weight: 100;  /* сделаем чуть жирнее */
-      margin: 20px;
-    }
     h2 {
       margin-left: 20px;
       font-weight: 100;
+    }
+    #numberOfKeys {
+      font-size: 14px;   
+      font-weight: 100;
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    .resultsOfGuid {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .sourceText {
+      font-size: 14px; 
+      font-weight: 100;
+      margin-left: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <h2>Поиск GUID в тексте</h2>
 
-  <label for="inputText">Исходный текст:</label><br>
+  <div class="sourceText">Исходный текст:</div>
+  <label for="inputText"></label>
   <textarea id="inputText" placeholder="Вставьте сюда текст..."></textarea>
 
   <br>
@@ -80,10 +88,14 @@
   <button onclick="copyResult()">Копировать результат</button>
   <br>
 
-  <div id="copyMessage">✅ Результат скопирован</div>
+  <div class="resultsOfGuid">
+    <div id="numberOfKeys">Результат: </div>
+    <div id="copyMessage">&nbsp;✅ Результат скопирован</div>
+  </div>
 
-  <br>
-  <label for="outputText">Результат:</label><br>
+
+  
+  <label for="outputText"></label>
   <textarea id="outputText" readonly></textarea>
 
   <script>
@@ -97,6 +109,9 @@
       const input = document.getElementById("inputText").value;
       const result = findGuid(input);
       document.getElementById("outputText").value = result.join("\n");
+
+      const numberOfUniqueKeys = document.getElementById("numberOfKeys");
+      numberOfUniqueKeys.innerHTML = `Результат: количество уникальных ключей равно ${result.length}`;
     }
 
     function clearInput() {
