@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Поиск GUID</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      background: linear-gradient(90deg, #121959,#172179,#384194);
+      padding: 20px;
+      padding-right: 40px;
+      color:#e0e0e0;
+      font-weight: 100;
+      font-size: 20px;
+    }
+    textarea {
+      border-radius: 20px 0px 0px 20px;
+      width: 100%;
+      height: 200px;
+      margin-bottom: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 8px;
+      resize: none;
+      outline: none;
+      background-color: #e0e0e0;
+      color:#121959;
+      padding-left: 20px;
+    }
+    button {
+      all: unset;        
+      cursor: pointer; 
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 10px;
+      background-color:#384194;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    #copyMessage {
+      margin-top: 10px;
+      color: green;
+      font-size: 14px;
+      display: none;
+    }
+    label[for="inputText"] {
+      font-size: 14px;   /* увеличим */
+      font-weight: 100;  /* сделаем чуть жирнее */
+      margin: 20px;
+    }
+    label[for="outputText"] {
+      font-size: 14px;   /* увеличим */
+      font-weight: 100;  /* сделаем чуть жирнее */
+      margin: 20px;
+    }
+    h2 {
+      margin-left: 20px;
+      font-weight: 100;
+    }
+  </style>
+</head>
+<body>
+  <h2>Поиск GUID в тексте</h2>
+
+  <label for="inputText">Исходный текст:</label><br>
+  <textarea id="inputText" placeholder="Вставьте сюда текст..."></textarea>
+
+  <br>
+  <button onclick="processText()">Найти GUID</button>
+  <button onclick="clearInput()">Очистить</button>
+  <button onclick="copyResult()">Копировать результат</button>
+  <br>
+
+  <div id="copyMessage">✅ Результат скопирован</div>
+
+  <br>
+  <label for="outputText">Результат:</label><br>
+  <textarea id="outputText" readonly></textarea>
+
+  <script>
+    function findGuid(str) {
+      const regex = /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
+      const matches = str.match(regex) || [];
+      return [...new Set(matches.map(m => m.toLowerCase()))];
+    }
+
+    function processText() {
+      const input = document.getElementById("inputText").value;
+      const result = findGuid(input);
+      document.getElementById("outputText").value = result.join("\n");
+    }
+
+    function clearInput() {
+      document.getElementById("inputText").value = "";
+    }
+
+    function copyResult() {
+      const output = document.getElementById("outputText");
+      if (output.value.trim() === "") return;
+
+      output.select();
+      document.execCommand("copy");
+
+      const msg = document.getElementById("copyMessage");
+      msg.style.display = "block";
+
+      setTimeout(() => {
+        msg.style.display = "none";
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
